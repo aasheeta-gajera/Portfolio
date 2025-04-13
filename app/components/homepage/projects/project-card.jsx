@@ -1,8 +1,9 @@
 "use client";
 import * as React from 'react';
+import Image from 'next/image';
 
 function ProjectCard({ project }) {
-  const [showScreenshots, setShowScreenshots] = React.useState(true); // Set to true to show screenshots by default
+  const [showScreenshots, setShowScreenshots] = React.useState(true);
 
   return (
     <div className="from-[#0d1224] border-[#1b2c68a0] relative rounded-lg border bg-gradient-to-r to-[#0a0d37] w-full cursor-pointer">
@@ -31,27 +32,28 @@ function ProjectCard({ project }) {
             <span className="mr-2 text-pink-500">const</span>
             <span className="mr-2 text-white">project</span>
             <span className="mr-2 text-pink-500">=</span>
-            <span className="text-gray-400">{'{'}</span>
+            <span className="text-gray-400">{'{' + project.description.replace(/'/g, "&apos;")}</span>
           </div>
+
           <div>
             <span className="ml-4 lg:ml-8 mr-2 text-white">name:</span>
-            <span className="text-gray-400">'</span>
+            <span className="text-gray-400">&apos;</span>
             <span className="text-amber-300">{project.name}</span>
-            <span className="text-gray-400">',</span>
+            <span className="text-gray-400">&apos;,</span>
           </div>
 
           <div className="ml-4 lg:ml-8 mr-2">
-            <span className=" text-white">tools:</span>
-            <span className="text-gray-400">['</span>
+            <span className="text-white">tools:</span>
+            <span className="text-gray-400">[&apos;</span>
             {
               project.tools.map((tag, i) => (
                 <React.Fragment key={i}>
                   <span className="text-amber-300">{tag}</span>
-                  {project.tools.length - 1 !== i && <span className="text-gray-400">', '</span>}
+                  {project.tools.length - 1 !== i && <span className="text-gray-400">&apos;, &apos;</span>}
                 </React.Fragment>
               ))
             }
-            <span className="text-gray-400">'],</span>
+            <span className="text-gray-400">&apos;],</span>
           </div>
 
           <div>
@@ -62,7 +64,9 @@ function ProjectCard({ project }) {
 
           <div className="ml-4 lg:ml-8 mr-2">
             <span className="text-white">Description:</span>
-            <span className="text-cyan-400">{' ' + project.description}</span>
+            <span className="text-cyan-400">
+              {' ' + project.description.replace(/'/g, "&apos;")}
+            </span>
             <span className="text-gray-400">,</span>
           </div>
 
@@ -74,12 +78,15 @@ function ProjectCard({ project }) {
       {project.screenshots?.length > 0 ? (
         <div className="overflow-x-auto px-4 py-4 flex space-x-4">
           {project.screenshots.map((src, i) => (
-            <img
-              key={i}
-              src={src} // Corrected path to images in the public folder
-              alt={`screenshot-${i}`}
-              className="h-60 w-auto rounded-md shadow-lg transition-transform hover:scale-105" // Larger size for the images
-            />
+            <div key={i} className="relative h-60 w-auto min-w-[240px]">
+              <Image
+                src={src}
+                alt={`screenshot-${i}`}
+                layout="fill"
+                objectFit="contain"
+                className="rounded-md shadow-lg transition-transform hover:scale-105"
+              />
+            </div>
           ))}
         </div>
       ) : (
