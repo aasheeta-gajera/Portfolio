@@ -76,22 +76,24 @@ function ProjectCard({ project }) {
 
       {/* Screenshot row */}
       {project.screenshots?.length > 0 ? (
-        <div className="overflow-x-auto px-4 py-4 flex space-x-4">
-          {project.screenshots.map((src, i) => (
-            <div key={i} className="relative h-60 w-auto min-w-[240px]">
-              <Image
-                src={src}
-                alt={`screenshot-${i}`}
-                layout="fill"
-                objectFit="contain"
-                className="rounded-md shadow-lg transition-transform hover:scale-105"
-              />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-center text-gray-400">No screenshots available</p>
-      )}
+  <div className="overflow-x-auto py-4 flex gap-4">
+  {project.screenshots.map((src, i) => (
+    <div key={i} className="relative h-60 w-auto min-w-[240px]">
+      <Image
+        src={src}
+        alt={`screenshot-${i}`}
+        fill
+        style={{ objectFit: 'contain' }}
+        className="rounded-md shadow-lg transition-transform hover:scale-105"
+      />
+    </div>
+  ))}
+</div>
+
+) : (
+  <p className="text-center text-gray-400">No screenshots available</p>
+)}
+
     </div>
   );
 }
